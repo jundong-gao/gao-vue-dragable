@@ -66,7 +66,7 @@ var script = {
     },
 
     dianStyle() {
-      let size = 6 * (1 / this.option.scale || 1);
+      let size = 4 * (1 / this.option.scale || 1);
       return {
         width: size + 'px',
         height: size + 'px'
@@ -218,11 +218,13 @@ var script = {
 
     mouseover(e) {
       if (!this.option.dragable) return;
+      e.target.classList.add('hover');
       this.$emit('focus');
     },
 
     mouseleave(e) {
       if (!this.option.dragable) return;
+      e.target.classList.remove('hover');
       this.$emit('blur');
     }
 
@@ -401,6 +403,7 @@ var __vue_render__ = function () {
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "drag-dian drag-left-center",
+    style: _vm.dianStyle,
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -409,6 +412,7 @@ var __vue_render__ = function () {
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "drag-dian drag-left-bottom",
+    style: _vm.dianStyle,
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -417,6 +421,7 @@ var __vue_render__ = function () {
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "drag-dian drag-top",
+    style: _vm.dianStyle,
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -425,6 +430,7 @@ var __vue_render__ = function () {
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "drag-dian drag-bottom",
+    style: _vm.dianStyle,
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -433,6 +439,7 @@ var __vue_render__ = function () {
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "drag-dian drag-right-top",
+    style: _vm.dianStyle,
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -441,6 +448,7 @@ var __vue_render__ = function () {
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "drag-dian drag-right-center",
+    style: _vm.dianStyle,
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -449,6 +457,7 @@ var __vue_render__ = function () {
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "drag-dian drag-right-bottom",
+    style: _vm.dianStyle,
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -463,8 +472,8 @@ var __vue_staticRenderFns__ = [];
 
 const __vue_inject_styles__ = function (inject) {
   if (!inject) return;
-  inject("data-v-48094b30_0", {
-    source: ".drag[data-v-48094b30]{background-color:#87ceeb;z-index:999;width:50px;height:50px;position:absolute;cursor:pointer;user-select:none}.drag.active[data-v-48094b30]{background-color:red}.drag-dian[data-v-48094b30]{position:absolute;width:6px;height:6px;background-color:#000;border:1px solid #000}.drag-left-top[data-v-48094b30]{left:-3px;top:-3px;cursor:nw-resize}.drag-left-center[data-v-48094b30]{left:-3px;top:calc(50% - 3px);cursor:w-resize}.drag-left-bottom[data-v-48094b30]{left:-3px;bottom:-3px;cursor:sw-resize}.drag-right-top[data-v-48094b30]{right:-3px;top:-3px;cursor:ne-resize}.drag-right-center[data-v-48094b30]{right:-3px;top:calc(50% - 3px);cursor:e-resize}.drag-right-bottom[data-v-48094b30]{right:-3px;bottom:-3px;cursor:se-resize}.drag-top[data-v-48094b30]{left:calc(50% - 3px);top:-3px;cursor:n-resize}.drag-bottom[data-v-48094b30]{left:calc(50% - 3px);bottom:-3px;cursor:s-resize}",
+  inject("data-v-0f913cde_0", {
+    source: ".drag[data-v-0f913cde]{z-index:1;width:50px;height:50px;position:absolute;cursor:pointer;user-select:none}.drag.hover[data-v-0f913cde]{background-color:rgba(0,0,255,.1)}.drag.active[data-v-0f913cde]{background-color:rgba(0,0,255,.3)}.drag-dian[data-v-0f913cde]{position:absolute;background-color:#fff;border:1px solid #000}.drag-left-top[data-v-0f913cde]{left:-1px;top:-1px;cursor:nw-resize}.drag-left-center[data-v-0f913cde]{left:-1px;top:calc(50% - 1px);cursor:w-resize}.drag-left-bottom[data-v-0f913cde]{left:-1px;bottom:-1px;cursor:sw-resize}.drag-right-top[data-v-0f913cde]{right:-1px;top:-1px;cursor:ne-resize}.drag-right-center[data-v-0f913cde]{right:-1px;top:calc(50% - 1px);cursor:e-resize}.drag-right-bottom[data-v-0f913cde]{right:-1px;bottom:-1px;cursor:se-resize}.drag-top[data-v-0f913cde]{left:calc(50% - 1px);top:-1px;cursor:n-resize}.drag-bottom[data-v-0f913cde]{left:calc(50% - 1px);bottom:-1px;cursor:s-resize}",
     map: undefined,
     media: undefined
   });
@@ -472,7 +481,7 @@ const __vue_inject_styles__ = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__ = "data-v-48094b30";
+const __vue_scope_id__ = "data-v-0f913cde";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;

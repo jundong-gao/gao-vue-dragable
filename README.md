@@ -1,4 +1,4 @@
-## 拖动组件
+## 拖动组件 （[预览地址](http://drag.gaojundong.com)）
 
 ### 安装
 
@@ -12,7 +12,7 @@ import drag from 'gao-vue-dragable'
 Vue.use(drag)
 ```
 
-### 使用(父组件需设置position=relative)
+### 使用(父组件需设置 position=relative)
 
 ```vue
 <div style="position: relative;">
@@ -33,32 +33,32 @@ Vue.use(drag)
 
 ### 属性
 
-| name   | type   | Default          |
-| ------ | ------ | ---------------- |
-| data   | Object | 详见下data配置   |
-| option | Object | 详见下option配置 |
+| name   | type   | Default            |
+| ------ | ------ | ------------------ |
+| data   | Object | 详见下 data 配置   |
+| option | Object | 详见下 option 配置 |
 
-#### data配置（以下为必须参数）
+#### data 配置（以下为必须参数）
 
 ```js
 let data = {
   index: String, // 组件唯一标识
-  active: Boolean, // 组件是否被激活状态 
+  active: Boolean, // 组件是否被激活状态
   left: Number, // 距离父元素左侧
   top: Number, // 距离父元素右侧
   width: Number, // 组件宽
   height: Number, // 组件高
-  zIndex: Number // 组件层级
-}
+  zIndex: Number, // 组件层级
+};
 ```
 
-#### option配置（以下为必须参数）
+#### option 配置（以下为必须参数）
 
 ```js
 let option = {
   scele: Number, // 父组件使用transform:scale情况下 为确保拉伸小点的大小，默认值为1,
   dragable: false, // 当前组件是否可以拖动
-}
+};
 ```
 
 ### 事件
@@ -103,4 +103,3 @@ let option = {
     // 监听鼠标覆盖 组件时
   }
   ```
-
