@@ -6,6 +6,10 @@
 npm install gao-vue-dragable -S
 # or
 yarn add gao-vue-dragable
+
+#### main.js
+import drag from 'gao-vue-dragable'
+Vue.use(drag)
 ```
 
 ### 使用(父组件需设置position=relative)
@@ -100,4 +104,3 @@ let option = {
   }
   ```
 
-  
