@@ -187,6 +187,8 @@
 
 <template>
     <div class="drag"
+         :data-left="item.left"
+         :data-top="item.top"
          :ref="key"
          :class="{active: item.active}"
          :style="style"
@@ -211,6 +213,9 @@
 
 <style scoped>
     .drag{z-index: 1; width: 50px; height: 50px; position: absolute; cursor: pointer; user-select: none;}
+
+    .drag.active::before{font-size: 12px; line-height: 15px; content: attr(data-left); display: block; position: absolute; left: -100px; top: -15px; width: 100px; text-align: right; color: rgba(0,0,255,.5); border-bottom: 1px solid rgba(0,0,255,.1); padding-right: 20px; box-sizing: border-box;}
+    .drag.active::after{font-size: 12px; line-height: 15px; content: attr(data-top); display: block; position: absolute; top: -100px; left: 0; padding-right: 25px; box-sizing: border-box; width: 100px; transform: rotate(90deg); transform-origin: left top; text-align: right; color: rgba(0,0,255,.5);  border-top: 1px solid rgba(0,0,255,.1);}
     .drag.hover{background-color: rgba(0,0,255, 0.1);}
     .drag.active{background-color: rgba(0,0,255, 0.3);}
 
