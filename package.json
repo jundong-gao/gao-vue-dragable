@@ -1,11 +1,11 @@
 {
   "name": "gao-vue-dragable",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": false,
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:Icejundong/dragable.git"
+    "url": "https://github.com/jundong-gao/gao-vue-dragable"
   },
   "keywords": [
     "vue2.x",

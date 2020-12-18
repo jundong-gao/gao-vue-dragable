@@ -41,7 +41,7 @@
                 }
             },
             dianStyle() {
-                let size = 6 * (1 / this.option.scale || 1)
+                let size = 4 * (1 / this.option.scale || 1)
                 return {
                     width: size + 'px',
                     height: size + 'px'
@@ -173,10 +173,12 @@
             },
             mouseover(e){
                 if(!this.option.dragable) return
+                e.target.classList.add('hover')
                 this.$emit('focus')
             },
             mouseleave(e){
                 if(!this.option.dragable) return
+                e.target.classList.remove('hover')
                 this.$emit('blur')
             }
         }
@@ -196,29 +198,29 @@
         <slot></slot>
         <template v-if="item.active">
             <div class="drag-dian drag-left-top" :style="dianStyle" @mousedown.stop="dian($event, item, 'left-top')"></div>
-            <div class="drag-dian drag-left-center" @mousedown.stop="dian($event, item, 'left-center')"></div>
-            <div class="drag-dian drag-left-bottom" @mousedown.stop="dian($event, item, 'left-bottom')"></div>
-            <div class="drag-dian drag-top" @mousedown.stop="dian($event, item, 'top')"></div>
-            <div class="drag-dian drag-bottom" @mousedown.stop="dian($event, item, 'bottom')"></div>
-            <div class="drag-dian drag-right-top" @mousedown.stop="dian($event, item, 'right-top')"></div>
-            <div class="drag-dian drag-right-center" @mousedown.stop="dian($event, item, 'right-center')"></div>
-            <div class="drag-dian drag-right-bottom" @mousedown.stop="dian($event, item, 'right-bottom')"></div>
+            <div class="drag-dian drag-left-center" :style="dianStyle" @mousedown.stop="dian($event, item, 'left-center')"></div>
+            <div class="drag-dian drag-left-bottom" :style="dianStyle" @mousedown.stop="dian($event, item, 'left-bottom')"></div>
+            <div class="drag-dian drag-top" :style="dianStyle" @mousedown.stop="dian($event, item, 'top')"></div>
+            <div class="drag-dian drag-bottom" :style="dianStyle" @mousedown.stop="dian($event, item, 'bottom')"></div>
+            <div class="drag-dian drag-right-top" :style="dianStyle" @mousedown.stop="dian($event, item, 'right-top')"></div>
+            <div class="drag-dian drag-right-center" :style="dianStyle" @mousedown.stop="dian($event, item, 'right-center')"></div>
+            <div class="drag-dian drag-right-bottom" :style="dianStyle" @mousedown.stop="dian($event, item, 'right-bottom')"></div>
         </template>
     </div>
 </template>
 
 <style scoped>
-    .drag{background-color: skyblue; z-index: 999; width: 50px; height: 50px; position: absolute; cursor: pointer; user-select: none;}
-    .drag.active{background-color: red;}
+    .drag{z-index: 1; width: 50px; height: 50px; position: absolute; cursor: pointer; user-select: none;}
+    .drag.hover{background-color: rgba(0,0,255, 0.1);}
+    .drag.active{background-color: rgba(0,0,255, 0.3);}
 
-    .drag-dian{position: absolute; width: 6px; height: 6px; background-color: #000; border: 1px solid #000;}
-    .drag-left-top{left: -3px; top: -3px; cursor: nw-resize;}
-    .drag-left-center{left: -3px; top: calc(50% - 3px); cursor: w-resize;}
-    .drag-left-bottom{left: -3px; bottom: -3px; cursor: sw-resize}
-    .drag-right-top{right: -3px; top: -3px; cursor: ne-resize;}
-    .drag-right-center{right: -3px; top: calc(50% - 3px); cursor: e-resize;}
-    .drag-right-bottom{right: -3px; bottom: -3px; cursor: se-resize;}
-    .drag-top{left: calc(50% - 3px); top: -3px; cursor: n-resize;}
-    .drag-bottom{left: calc(50% - 3px); bottom: -3px; cursor: s-resize;}
-
+    .drag-dian{position: absolute; background-color: #fff; border: 1px solid #000;}
+    .drag-left-top{left: -1px; top: -1px; cursor: nw-resize;}
+    .drag-left-center{left: -1px; top: calc(50% - 1px); cursor: w-resize;}
+    .drag-left-bottom{left: -1px; bottom: -1px; cursor: sw-resize}
+    .drag-right-top{right: -1px; top: -1px; cursor: ne-resize;}
+    .drag-right-center{right: -1px; top: calc(50% - 1px); cursor: e-resize;}
+    .drag-right-bottom{right: -1px; bottom: -1px; cursor: se-resize;}
+    .drag-top{left: calc(50% - 1px); top: -1px; cursor: n-resize;}
+    .drag-bottom{left: calc(50% - 1px); bottom: -1px; cursor: s-resize;}
 </style>
