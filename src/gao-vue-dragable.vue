@@ -89,6 +89,8 @@
                 let cha = {
                     offsetx: e.clientX - this.start.x,
                     offsety: e.clientY - this.start.y,
+                    left: left,
+                    top: top
                 }
                 this.$emit('moving', cha)
             },
