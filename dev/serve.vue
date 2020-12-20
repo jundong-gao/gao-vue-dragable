@@ -20,6 +20,9 @@
             }
         },
         methods: {
+            changeSizeStop(e){
+                console.log('changeSizeStop')
+            },
             movestart(e){
                 this.lists.forEach(item => {
                     item.active = false
@@ -28,15 +31,12 @@
                 e.active = true
                 e.zIndex = 9999
             },
-            moving(e){
-                // console.log('moving', JSON.stringify(e))
+            moving(e,item){
+                item.left = e.left
+                item.top = e.top
             },
             movestop(e){
-                this.lists.forEach(item => {
-                    if(item.index == e.index){
-                        Object.assign(item, e)
-                    }
-                })
+               console.log('movestop')
             },
             clearMove(){
                 this.lists.forEach(item => {
@@ -62,8 +62,9 @@
                 :option="option"
                 @movestart="movestart(item)"
                 @movestop="movestop"
-                @moving="moving(item)"
+                @moving="moving($event,item)"
                 @focus="focus(item)"
+                @change-size-stop="changeSizeStop"
                 @blur="blur(item)">{{index}}</gao-vue-dragable>
     </div>
 </template>

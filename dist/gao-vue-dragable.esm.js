@@ -37,14 +37,13 @@ var script = {
   },
 
   watch: {
-    data: {
-      handler() {
-        this.item = Object.assign({}, this.item, this.data);
-      },
-
-      deep: true,
-      immediate: true
-    },
+    // data: {
+    //     handler() {
+    //         this.item = Object.assign({}, this.item, this.data)
+    //     },
+    //     deep: true,
+    //     immediate: true
+    // },
     option: {
       handler() {
         console.log('option改变', this.option);
@@ -57,11 +56,11 @@ var script = {
   computed: {
     style() {
       return {
-        left: this.setPx(this.item.left),
-        top: this.setPx(this.item.top),
-        width: this.setPx(this.item.width),
-        height: this.setPx(this.item.height),
-        zIndex: this.item.zIndex
+        left: this.setPx(this.data.left),
+        top: this.setPx(this.data.top),
+        width: this.setPx(this.data.width),
+        height: this.setPx(this.data.height),
+        zIndex: this.data.zIndex
       };
     },
 
@@ -111,9 +110,9 @@ var script = {
       if (!this.option.dragable) return;
       if (!this.isDown) return;
       let left = e.clientX - this.sb_bkx;
-      let top = e.clientY - this.sb_bky;
-      this.item.left = left;
-      this.item.top = top; // 移动选中组件时 偏移的坐标
+      let top = e.clientY - this.sb_bky; // this.item.left = left
+      // this.item.top = top
+      // 移动选中组件时 偏移的坐标
 
       let cha = {
         offsetx: e.clientX - this.start.x,
@@ -210,6 +209,7 @@ var script = {
       };
 
       document.onmouseup = e => {
+        this.$emit('change-size-stop', this.data);
         this.up(e);
       };
     },
@@ -376,12 +376,12 @@ var __vue_render__ = function () {
     ref: _vm.key,
     staticClass: "drag",
     class: {
-      active: _vm.item.active
+      active: _vm.data.active
     },
     style: _vm.style,
     attrs: {
-      "data-left": _vm.item.left,
-      "data-top": _vm.item.top
+      "data-left": _vm.data.left,
+      "data-top": _vm.data.top
     },
     on: {
       "mousedown": function ($event) {
@@ -398,13 +398,13 @@ var __vue_render__ = function () {
         return _vm.clickStop($event);
       }
     }
-  }, [_vm._t("default"), _vm._v(" "), _vm.item.active ? [_c('div', {
+  }, [_vm._t("default"), _vm._v(" "), _vm.data.active ? [_c('div', {
     staticClass: "drag-dian drag-left-top",
     style: _vm.dianStyle,
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
-        return _vm.dian($event, _vm.item, 'left-top');
+        return _vm.dian($event, _vm.data, 'left-top');
       }
     }
   }), _vm._v(" "), _c('div', {
@@ -413,7 +413,7 @@ var __vue_render__ = function () {
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
-        return _vm.dian($event, _vm.item, 'left-center');
+        return _vm.dian($event, _vm.data, 'left-center');
       }
     }
   }), _vm._v(" "), _c('div', {
@@ -422,7 +422,7 @@ var __vue_render__ = function () {
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
-        return _vm.dian($event, _vm.item, 'left-bottom');
+        return _vm.dian($event, _vm.data, 'left-bottom');
       }
     }
   }), _vm._v(" "), _c('div', {
@@ -431,7 +431,7 @@ var __vue_render__ = function () {
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
-        return _vm.dian($event, _vm.item, 'top');
+        return _vm.dian($event, _vm.data, 'top');
       }
     }
   }), _vm._v(" "), _c('div', {
@@ -440,7 +440,7 @@ var __vue_render__ = function () {
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
-        return _vm.dian($event, _vm.item, 'bottom');
+        return _vm.dian($event, _vm.data, 'bottom');
       }
     }
   }), _vm._v(" "), _c('div', {
@@ -449,7 +449,7 @@ var __vue_render__ = function () {
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
-        return _vm.dian($event, _vm.item, 'right-top');
+        return _vm.dian($event, _vm.data, 'right-top');
       }
     }
   }), _vm._v(" "), _c('div', {
@@ -458,7 +458,7 @@ var __vue_render__ = function () {
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
-        return _vm.dian($event, _vm.item, 'right-center');
+        return _vm.dian($event, _vm.data, 'right-center');
       }
     }
   }), _vm._v(" "), _c('div', {
@@ -467,7 +467,7 @@ var __vue_render__ = function () {
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
-        return _vm.dian($event, _vm.item, 'right-bottom');
+        return _vm.dian($event, _vm.data, 'right-bottom');
       }
     }
   })] : _vm._e()], 2);
@@ -478,8 +478,8 @@ var __vue_staticRenderFns__ = [];
 
 const __vue_inject_styles__ = function (inject) {
   if (!inject) return;
-  inject("data-v-21a14d40_0", {
-    source: ".drag[data-v-21a14d40]{z-index:1;width:50px;height:50px;position:absolute;cursor:pointer;user-select:none}.drag.active[data-v-21a14d40]::before{font-size:12px;line-height:15px;content:attr(data-left);display:block;position:absolute;left:-100px;top:-15px;width:100px;text-align:right;color:rgba(0,0,255,.5);border-bottom:1px solid rgba(0,0,255,.1);padding-right:20px;box-sizing:border-box}.drag.active[data-v-21a14d40]::after{font-size:12px;line-height:15px;content:attr(data-top);display:block;position:absolute;top:-100px;left:0;padding-right:25px;box-sizing:border-box;width:100px;transform:rotate(90deg);transform-origin:left top;text-align:right;color:rgba(0,0,255,.5);border-top:1px solid rgba(0,0,255,.1)}.drag.hover[data-v-21a14d40]{background-color:rgba(0,0,255,.1)}.drag.active[data-v-21a14d40]{background-color:rgba(0,0,255,.3)}.drag-dian[data-v-21a14d40]{position:absolute;background-color:#fff;border:1px solid #000}.drag-left-top[data-v-21a14d40]{left:-1px;top:-1px;cursor:nw-resize}.drag-left-center[data-v-21a14d40]{left:-1px;top:calc(50% - 1px);cursor:w-resize}.drag-left-bottom[data-v-21a14d40]{left:-1px;bottom:-1px;cursor:sw-resize}.drag-right-top[data-v-21a14d40]{right:-1px;top:-1px;cursor:ne-resize}.drag-right-center[data-v-21a14d40]{right:-1px;top:calc(50% - 1px);cursor:e-resize}.drag-right-bottom[data-v-21a14d40]{right:-1px;bottom:-1px;cursor:se-resize}.drag-top[data-v-21a14d40]{left:calc(50% - 1px);top:-1px;cursor:n-resize}.drag-bottom[data-v-21a14d40]{left:calc(50% - 1px);bottom:-1px;cursor:s-resize}",
+  inject("data-v-2dc92c8c_0", {
+    source: ".drag[data-v-2dc92c8c]{z-index:1;width:50px;height:50px;position:absolute;cursor:pointer;user-select:none}.drag.active[data-v-2dc92c8c]::before{font-size:12px;line-height:15px;content:attr(data-left);display:block;position:absolute;left:-100px;top:-15px;width:100px;text-align:right;color:rgba(0,0,255,.5);border-bottom:1px solid rgba(0,0,255,.1);padding-right:20px;box-sizing:border-box}.drag.active[data-v-2dc92c8c]::after{font-size:12px;line-height:15px;content:attr(data-top);display:block;position:absolute;top:-100px;left:0;padding-right:25px;box-sizing:border-box;width:100px;transform:rotate(90deg);transform-origin:left top;text-align:right;color:rgba(0,0,255,.5);border-top:1px solid rgba(0,0,255,.1)}.drag.hover[data-v-2dc92c8c]{background-color:rgba(0,0,255,.1)}.drag.active[data-v-2dc92c8c]{background-color:rgba(0,0,255,.3)}.drag-dian[data-v-2dc92c8c]{position:absolute;background-color:#fff;border:1px solid #000}.drag-left-top[data-v-2dc92c8c]{left:-1px;top:-1px;cursor:nw-resize}.drag-left-center[data-v-2dc92c8c]{left:-1px;top:calc(50% - 1px);cursor:w-resize}.drag-left-bottom[data-v-2dc92c8c]{left:-1px;bottom:-1px;cursor:sw-resize}.drag-right-top[data-v-2dc92c8c]{right:-1px;top:-1px;cursor:ne-resize}.drag-right-center[data-v-2dc92c8c]{right:-1px;top:calc(50% - 1px);cursor:e-resize}.drag-right-bottom[data-v-2dc92c8c]{right:-1px;bottom:-1px;cursor:se-resize}.drag-top[data-v-2dc92c8c]{left:calc(50% - 1px);top:-1px;cursor:n-resize}.drag-bottom[data-v-2dc92c8c]{left:calc(50% - 1px);bottom:-1px;cursor:s-resize}",
     map: undefined,
     media: undefined
   });
@@ -487,7 +487,7 @@ const __vue_inject_styles__ = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__ = "data-v-21a14d40";
+const __vue_scope_id__ = "data-v-2dc92c8c";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;

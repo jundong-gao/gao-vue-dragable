@@ -15,13 +15,13 @@
             }
         },
         watch: {
-            data: {
-                handler() {
-                    this.item = Object.assign({}, this.item, this.data)
-                },
-                deep: true,
-                immediate: true
-            },
+            // data: {
+            //     handler() {
+            //         this.item = Object.assign({}, this.item, this.data)
+            //     },
+            //     deep: true,
+            //     immediate: true
+            // },
             option: {
                 handler() {
                     console.log('option改变', this.option)
@@ -33,11 +33,11 @@
         computed: {
             style() {
                 return {
-                    left: this.setPx(this.item.left),
-                    top: this.setPx(this.item.top),
-                    width: this.setPx(this.item.width),
-                    height: this.setPx(this.item.height),
-                    zIndex: this.item.zIndex
+                    left: this.setPx(this.data.left),
+                    top: this.setPx(this.data.top),
+                    width: this.setPx(this.data.width),
+                    height: this.setPx(this.data.height),
+                    zIndex: this.data.zIndex
                 }
             },
             dianStyle() {
@@ -82,8 +82,8 @@
                 if(!this.isDown) return
                 let left = e.clientX - this.sb_bkx
                 let top = e.clientY - this.sb_bky
-                this.item.left = left
-                this.item.top = top
+                // this.item.left = left
+                // this.item.top = top
 
                 // 移动选中组件时 偏移的坐标
                 let cha = {
@@ -92,6 +92,7 @@
                     left: left,
                     top: top
                 }
+
                 this.$emit('moving', cha)
             },
             up(e){
@@ -167,6 +168,7 @@
                     }
                 }
                 document.onmouseup = e => {
+                    this.$emit('change-size-stop', this.data)
                     this.up(e)
                 }
             },
@@ -189,10 +191,10 @@
 
 <template>
     <div class="drag"
-         :data-left="item.left"
-         :data-top="item.top"
+         :data-left="data.left"
+         :data-top="data.top"
          :ref="key"
-         :class="{active: item.active}"
+         :class="{active: data.active}"
          :style="style"
          @mousedown.stop="down"
          @mouseover.stop="mouseover"
@@ -200,15 +202,15 @@
          @click.stop="clickStop"
     >
         <slot></slot>
-        <template v-if="item.active">
-            <div class="drag-dian drag-left-top" :style="dianStyle" @mousedown.stop="dian($event, item, 'left-top')"></div>
-            <div class="drag-dian drag-left-center" :style="dianStyle" @mousedown.stop="dian($event, item, 'left-center')"></div>
-            <div class="drag-dian drag-left-bottom" :style="dianStyle" @mousedown.stop="dian($event, item, 'left-bottom')"></div>
-            <div class="drag-dian drag-top" :style="dianStyle" @mousedown.stop="dian($event, item, 'top')"></div>
-            <div class="drag-dian drag-bottom" :style="dianStyle" @mousedown.stop="dian($event, item, 'bottom')"></div>
-            <div class="drag-dian drag-right-top" :style="dianStyle" @mousedown.stop="dian($event, item, 'right-top')"></div>
-            <div class="drag-dian drag-right-center" :style="dianStyle" @mousedown.stop="dian($event, item, 'right-center')"></div>
-            <div class="drag-dian drag-right-bottom" :style="dianStyle" @mousedown.stop="dian($event, item, 'right-bottom')"></div>
+        <template v-if="data.active">
+            <div class="drag-dian drag-left-top" :style="dianStyle" @mousedown.stop="dian($event, data, 'left-top')"></div>
+            <div class="drag-dian drag-left-center" :style="dianStyle" @mousedown.stop="dian($event, data, 'left-center')"></div>
+            <div class="drag-dian drag-left-bottom" :style="dianStyle" @mousedown.stop="dian($event, data, 'left-bottom')"></div>
+            <div class="drag-dian drag-top" :style="dianStyle" @mousedown.stop="dian($event, data, 'top')"></div>
+            <div class="drag-dian drag-bottom" :style="dianStyle" @mousedown.stop="dian($event, data, 'bottom')"></div>
+            <div class="drag-dian drag-right-top" :style="dianStyle" @mousedown.stop="dian($event, data, 'right-top')"></div>
+            <div class="drag-dian drag-right-center" :style="dianStyle" @mousedown.stop="dian($event, data, 'right-center')"></div>
+            <div class="drag-dian drag-right-bottom" :style="dianStyle" @mousedown.stop="dian($event, data, 'right-bottom')"></div>
         </template>
     </div>
 </template>

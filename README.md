@@ -74,9 +74,9 @@ let option = {
 - `moving`
 
   ```js
-  movestop(e){
+  moving(e){
     // 组件拖动中 ,返回组件移动的差值
-    // {offsetx: 10, offsety: 10}
+    // {offsetx: 10, offsety: 10, left: 100, top: 100}
   }
   ```
 
@@ -84,7 +84,15 @@ let option = {
 
   ```js
   movestop(e){
-    // 返回移动之后的item. 需要在此回调下 重置组件width, height, top, left 等属性
+    // 组件移动之后
+  }
+  ```
+  
+- `change-size-stop`
+
+  ```js
+  changeSizeStop(e){
+    // 组件尺寸发生变化之后
   }
   ```
 
