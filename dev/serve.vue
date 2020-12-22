@@ -14,7 +14,7 @@
                     {left: 100, top: 100, active: false, index: '222', width: 200, height: 100, zIndex: 20},
                 ],
                 option: { // 整个页面关于drag的统一配置
-                    scale: .2,
+                    scale: 1,
                     dragable: true
                 }
             }
@@ -78,5 +78,5 @@
 
 <style>
     html,body{margin: 0; padding: 0; width: 100%; height: 100%;}
-    #app{width: 100%; height: 100%; transform: scale(.2); transform-origin: 0 0 ;}
+    #app{width: 100%; height: 100%; transform: scale(1); transform-origin: 0 0 ;}
 </style>

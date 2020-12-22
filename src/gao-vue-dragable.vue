@@ -25,6 +25,7 @@
             option: {
                 handler() {
                     // console.log('option改变', this.option)
+
                 },
                 deep: true,
                 immediate: true
@@ -38,6 +39,18 @@
                     width: this.setPx(this.data.width),
                     height: this.setPx(this.data.height),
                     zIndex: this.data.zIndex
+                }
+            },
+            dragXStyle() {
+                return {
+                    transform: `scale(${1 / this.option.scale})`,
+                    'transform-origin': 'right bottom'
+                }
+            },
+            dragYStyle() {
+                return {
+                    transform: `scale(${1 / this.option.scale}) rotate(-90deg)`,
+                    'transform-origin': '0 0'
                 }
             },
             dianStyle() {
@@ -213,6 +226,7 @@
     <div class="drag"
          :data-left="data.left"
          :data-top="data.top"
+         :data-scale="2"
          :ref="key"
          :class="{active: data.active}"
          :style="style"
@@ -222,6 +236,10 @@
          @click.stop="clickStop"
     >
         <slot></slot>
+        <template v-if="data.active">
+            <div class="drag-x flex-aic" :style="dragXStyle">X：{{data.left}}</div>
+            <div class="drag-y flex-aic" :style="dragYStyle">Y：{{data.top}}</div>
+        </template>
         <template v-if="data.active">
             <div class="drag-dian drag-left-top" :style="dianStyle" @mousedown.stop="dian($event, data, 'left-top')"></div>
             <div class="drag-dian drag-left-center" :style="dianStyle" @mousedown.stop="dian($event, data, 'left-center')"></div>
@@ -237,9 +255,8 @@
 
 <style scoped>
     .drag{z-index: 1; width: 50px; height: 50px; position: absolute; cursor: pointer; user-select: none;}
-
-    .drag.active::before{font-size: 12px; line-height: 15px; content: attr(data-left); display: block; position: absolute; left: -100px; top: -15px; width: 100px; text-align: right; color: rgba(0,0,255,.5); border-bottom: 1px solid rgba(0,0,255,.1); padding-right: 20px; box-sizing: border-box;}
-    .drag.active::after{font-size: 12px; line-height: 15px; content: attr(data-top); display: block; position: absolute; top: -100px; left: 0; padding-right: 25px; box-sizing: border-box; width: 100px; transform: rotate(90deg); transform-origin: left top; text-align: right; color: rgba(0,0,255,.5);  border-top: 1px solid rgba(0,0,255,.1);}
+    .drag.active .drag-x{font-size: 12px; line-height: 15px;  display: block; position: absolute; left: -100px; top: -15px; width: 100px; text-align: right; color: rgba(0,0,255,.5); border-bottom: 1px solid rgba(0,0,255,.1); padding-right: 10px; box-sizing: border-box;}
+    .drag.active .drag-y{font-size: 12px; line-height: 15px;  display: block; position: absolute; left: 0; top: 0; padding-left: 10px; box-sizing: border-box; width: 100px;  color: rgba(0,0,255,.5);  border-top: 1px solid rgba(0,0,255,.1);}
     .drag.hover{background-color: rgba(0,0,255, 0.1);}
     .drag.active{background-color: rgba(0,0,255, 0.3);}
 

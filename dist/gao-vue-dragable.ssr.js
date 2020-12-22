@@ -57,6 +57,18 @@ var createUUID = function createUUID() {
         zIndex: this.data.zIndex
       };
     },
+    dragXStyle: function dragXStyle() {
+      return {
+        transform: "scale(".concat(1 / this.option.scale, ")"),
+        'transform-origin': 'right bottom'
+      };
+    },
+    dragYStyle: function dragYStyle() {
+      return {
+        transform: "scale(".concat(1 / this.option.scale, ") rotate(-90deg)"),
+        'transform-origin': '0 0'
+      };
+    },
     dianStyle: function dianStyle() {
       var size = 3 * (1 / this.option.scale || 1);
       return {
@@ -369,7 +381,8 @@ var __vue_render__ = function __vue_render__() {
     style: _vm.style,
     attrs: {
       "data-left": _vm.data.left,
-      "data-top": _vm.data.top
+      "data-top": _vm.data.top,
+      "data-scale": 2
     },
     on: {
       "mousedown": function mousedown($event) {
@@ -386,7 +399,7 @@ var __vue_render__ = function __vue_render__() {
         return _vm.clickStop($event);
       }
     }
-  }, [_vm._t("default"), _vm._ssrNode(" " + (_vm.data.active ? "<div class=\"drag-dian drag-left-top\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-7ef6aaf0></div> <div class=\"drag-dian drag-left-center\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-7ef6aaf0></div> <div class=\"drag-dian drag-left-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-7ef6aaf0></div> <div class=\"drag-dian drag-top\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-7ef6aaf0></div> <div class=\"drag-dian drag-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-7ef6aaf0></div> <div class=\"drag-dian drag-right-top\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-7ef6aaf0></div> <div class=\"drag-dian drag-right-center\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-7ef6aaf0></div> <div class=\"drag-dian drag-right-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-7ef6aaf0></div>" : "<!---->"))], 2);
+  }, [_vm._t("default"), _vm._ssrNode(" " + (_vm.data.active ? "<div class=\"drag-x flex-aic\"" + _vm._ssrStyle(null, _vm.dragXStyle, null) + " data-v-24a468e6>" + _vm._ssrEscape("X：" + _vm._s(_vm.data.left)) + "</div> <div class=\"drag-y flex-aic\"" + _vm._ssrStyle(null, _vm.dragYStyle, null) + " data-v-24a468e6>" + _vm._ssrEscape("Y：" + _vm._s(_vm.data.top)) + "</div>" : "<!---->") + " " + (_vm.data.active ? "<div class=\"drag-dian drag-left-top\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-24a468e6></div> <div class=\"drag-dian drag-left-center\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-24a468e6></div> <div class=\"drag-dian drag-left-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-24a468e6></div> <div class=\"drag-dian drag-top\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-24a468e6></div> <div class=\"drag-dian drag-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-24a468e6></div> <div class=\"drag-dian drag-right-top\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-24a468e6></div> <div class=\"drag-dian drag-right-center\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-24a468e6></div> <div class=\"drag-dian drag-right-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-24a468e6></div>" : "<!---->"))], 2);
 };
 
 var __vue_staticRenderFns__ = [];
@@ -394,8 +407,8 @@ var __vue_staticRenderFns__ = [];
 
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-7ef6aaf0_0", {
-    source: ".drag[data-v-7ef6aaf0]{z-index:1;width:50px;height:50px;position:absolute;cursor:pointer;user-select:none}.drag.active[data-v-7ef6aaf0]::before{font-size:12px;line-height:15px;content:attr(data-left);display:block;position:absolute;left:-100px;top:-15px;width:100px;text-align:right;color:rgba(0,0,255,.5);border-bottom:1px solid rgba(0,0,255,.1);padding-right:20px;box-sizing:border-box}.drag.active[data-v-7ef6aaf0]::after{font-size:12px;line-height:15px;content:attr(data-top);display:block;position:absolute;top:-100px;left:0;padding-right:25px;box-sizing:border-box;width:100px;transform:rotate(90deg);transform-origin:left top;text-align:right;color:rgba(0,0,255,.5);border-top:1px solid rgba(0,0,255,.1)}.drag.hover[data-v-7ef6aaf0]{background-color:rgba(0,0,255,.1)}.drag.active[data-v-7ef6aaf0]{background-color:rgba(0,0,255,.3)}.drag-dian[data-v-7ef6aaf0]{position:absolute;background-color:#fff;border:1px solid #000}.drag-left-top[data-v-7ef6aaf0]{left:0;top:0;cursor:nw-resize}.drag-left-center[data-v-7ef6aaf0]{left:0;top:50%;cursor:w-resize}.drag-left-bottom[data-v-7ef6aaf0]{left:0;bottom:0;cursor:sw-resize}.drag-right-top[data-v-7ef6aaf0]{right:0;top:0;cursor:ne-resize}.drag-right-center[data-v-7ef6aaf0]{right:0;top:50%;cursor:e-resize}.drag-right-bottom[data-v-7ef6aaf0]{right:0;bottom:0;cursor:se-resize}.drag-top[data-v-7ef6aaf0]{left:50%;top:0;cursor:n-resize}.drag-bottom[data-v-7ef6aaf0]{left:50%;bottom:0;cursor:s-resize}",
+  inject("data-v-24a468e6_0", {
+    source: ".drag[data-v-24a468e6]{z-index:1;width:50px;height:50px;position:absolute;cursor:pointer;user-select:none}.drag.active .drag-x[data-v-24a468e6]{font-size:12px;line-height:15px;display:block;position:absolute;left:-100px;top:-15px;width:100px;text-align:right;color:rgba(0,0,255,.5);border-bottom:1px solid rgba(0,0,255,.1);padding-right:10px;box-sizing:border-box}.drag.active .drag-y[data-v-24a468e6]{font-size:12px;line-height:15px;display:block;position:absolute;left:0;top:0;padding-left:10px;box-sizing:border-box;width:100px;color:rgba(0,0,255,.5);border-top:1px solid rgba(0,0,255,.1)}.drag.hover[data-v-24a468e6]{background-color:rgba(0,0,255,.1)}.drag.active[data-v-24a468e6]{background-color:rgba(0,0,255,.3)}.drag-dian[data-v-24a468e6]{position:absolute;background-color:#fff;border:1px solid #000}.drag-left-top[data-v-24a468e6]{left:0;top:0;cursor:nw-resize}.drag-left-center[data-v-24a468e6]{left:0;top:50%;cursor:w-resize}.drag-left-bottom[data-v-24a468e6]{left:0;bottom:0;cursor:sw-resize}.drag-right-top[data-v-24a468e6]{right:0;top:0;cursor:ne-resize}.drag-right-center[data-v-24a468e6]{right:0;top:50%;cursor:e-resize}.drag-right-bottom[data-v-24a468e6]{right:0;bottom:0;cursor:se-resize}.drag-top[data-v-24a468e6]{left:50%;top:0;cursor:n-resize}.drag-bottom[data-v-24a468e6]{left:50%;bottom:0;cursor:s-resize}",
     map: undefined,
     media: undefined
   });
@@ -403,10 +416,10 @@ var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__ = "data-v-7ef6aaf0";
+var __vue_scope_id__ = "data-v-24a468e6";
 /* module identifier */
 
-var __vue_module_identifier__ = "data-v-7ef6aaf0";
+var __vue_module_identifier__ = "data-v-24a468e6";
 /* functional template */
 
 var __vue_is_functional_template__ = false;
