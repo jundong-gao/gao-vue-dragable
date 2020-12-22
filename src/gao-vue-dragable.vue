@@ -24,7 +24,7 @@
             // },
             option: {
                 handler() {
-                    console.log('option改变', this.option)
+                    // console.log('option改变', this.option)
                 },
                 deep: true,
                 immediate: true
@@ -41,7 +41,7 @@
                 }
             },
             dianStyle() {
-                let size = 4 * (1 / this.option.scale || 1)
+                let size = 3 * (1 / this.option.scale || 1)
                 return {
                     width: size + 'px',
                     height: size + 'px'
@@ -59,11 +59,13 @@
             down(e){
                 if(!this.option.dragable) return
 
-                this.sb_bkx = e.clientX - e.target.offsetLeft;
-                this.sb_bky = e.clientY - e.target.offsetTop;
+                this.sb_bkx = e.clientX;
+                this.sb_bky = e.clientY;
                 this.start = {
-                    x: e.clientX,
-                    y: e.clientY
+                    mouseX: e.clientX,
+                    mouseY: e.clientY,
+                    left: this.data.left,
+                    top: this.data.top
                 }
                 this.isDown = true
                 document.onmousemove = e => {
@@ -80,27 +82,42 @@
             move(e){
                 if(!this.option.dragable) return
                 if(!this.isDown) return
-                let left = e.clientX - this.sb_bkx
-                let top = e.clientY - this.sb_bky
+                // let left = e.clientX - this.sb_bkx
+                // let top = e.clientY - this.sb_bky
                 // this.item.left = left
                 // this.item.top = top
 
                 // 移动选中组件时 偏移的坐标
-                let cha = {
-                    offsetx: e.clientX - this.start.x,
-                    offsety: e.clientY - this.start.y,
-                    left: left,
-                    top: top
-                }
+                // let cha = {
+                //     offsetx: (e.clientX - this.start.x) * 2,
+                //     offsety: (e.clientY - this.start.y) * 2,
+                //
+                //     offsetx1: (e.clientX - this.start.x) ,
+                //     offsety1: (e.clientY - this.start.y) ,
+                //
+                //     left: left ,
+                //     top: top
+                // }
+                // console.log(JSON.stringify(cha))
 
-                this.$emit('moving', cha)
+
+                let newLeft = this.round(this.start.left + (e.clientX - this.start.mouseX) / this.option.scale)
+                let newTop = this.round(this.start.top + (e.clientY - this.start.mouseY) / this.option.scale)
+
+                this.$emit('moving', {
+                    left: newLeft,
+                    top: newTop
+                })
             },
             up(e){
                 this.isDown = false
                 this.dianIsDown = false
                 document.onmousemove = null
                 document.onmouseup = null
-                this.$emit('movestop', this.item)
+
+                let left = e.clientX - this.sb_bkx
+                let top = e.clientY - this.sb_bky
+                this.$emit('movestop')
             },
             clickStop(){
                 return false
@@ -127,43 +144,43 @@
                     }
                     switch(positon){
                         case 'left-top':
-                            currObj.width = this.numVal(o_width - cha.x)
-                            currObj.height = this.numVal(o_height - cha.y)
-                            currObj.left = o_left + cha.x
-                            currObj.top = o_top + cha.y
+                            currObj.width = this.round(this.numVal(o_width - cha.x / this.option.scale))
+                            currObj.height = this.round(this.numVal(o_height - cha.y / this.option.scale))
+                            currObj.left = this.round(o_left + cha.x / this.option.scale)
+                            currObj.top = this.round(o_top + cha.y / this.option.scale)
                             break
                         case 'left-center':
-                            currObj.width = this.numVal(o_width - cha.x)
-                            currObj.left = o_left + cha.x
+                            currObj.width = this.round(this.numVal(o_width - cha.x / this.option.scale))
+                            currObj.left = this.round(o_left + cha.x / this.option.scale)
                             break
                         case 'left-bottom':
-                            currObj.width = this.numVal(o_width - cha.x)
-                            currObj.height = this.numVal(o_height + cha.y)
-                            currObj.left = o_left + cha.x
+                            currObj.width = this.round(this.numVal(o_width - cha.x / this.option.scale))
+                            currObj.height = this.round(this.numVal(o_height + cha.y / this.option.scale))
+                            currObj.left = this.round(o_left + cha.x / this.option.scale)
                             break
                         case 'left-bottom':
-                            currObj.width = this.numVal(o_width - cha.x)
-                            currObj.height = this.numVal(o_height + cha.y)
-                            currObj.left = o_left + cha.x
+                            currObj.width = this.round(this.numVal(o_width - cha.x / this.option.scale))
+                            currObj.height = this.round(this.numVal(o_height + cha.y / this.option.scale))
+                            currObj.left = this.round(o_left + cha.x / this.option.scale)
                             break
                         case 'top':
-                            currObj.height = this.numVal(o_height - cha.y)
-                            currObj.top = o_top + cha.y
+                            currObj.height = this.round(this.numVal(o_height - cha.y / this.option.scale))
+                            currObj.top = this.round(o_top + cha.y / this.option.scale)
                             break
                         case 'bottom':
-                            currObj.height = this.numVal(o_height + cha.y)
+                            currObj.height = this.round(this.numVal(o_height + cha.y / this.option.scale))
                             break
                         case 'right-top':
-                            currObj.width = this.numVal(o_width + cha.x)
-                            currObj.height = this.numVal(o_height - cha.y)
-                            currObj.top = o_top + cha.y
+                            currObj.width = this.round(this.numVal(o_width + cha.x / this.option.scale))
+                            currObj.height = this.round(this.numVal(o_height - cha.y / this.option.scale))
+                            currObj.top = this.round(o_top + cha.y / this.option.scale)
                             break
                         case 'right-center':
-                            currObj.width = this.numVal(o_width + cha.x)
+                            currObj.width = this.round(this.numVal(o_width + cha.x / this.option.scale))
                             break
                         case 'right-bottom':
-                            currObj.width = this.numVal(o_width + cha.x)
-                            currObj.height = this.numVal(o_height + cha.y)
+                            currObj.width = this.round(this.numVal(o_width + cha.x / this.option.scale))
+                            currObj.height = this.round(this.numVal(o_height + cha.y / this.option.scale))
                             break
                     }
                 }
@@ -184,6 +201,9 @@
                 if(!this.option.dragable) return
                 e.target.classList.remove('hover')
                 this.$emit('blur')
+            },
+            round(val){
+                return Math.round(Number(val))
             }
         }
     }
@@ -224,12 +244,12 @@
     .drag.active{background-color: rgba(0,0,255, 0.3);}
 
     .drag-dian{position: absolute; background-color: #fff; border: 1px solid #000;}
-    .drag-left-top{left: -1px; top: -1px; cursor: nw-resize;}
-    .drag-left-center{left: -1px; top: calc(50% - 1px); cursor: w-resize;}
-    .drag-left-bottom{left: -1px; bottom: -1px; cursor: sw-resize}
-    .drag-right-top{right: -1px; top: -1px; cursor: ne-resize;}
-    .drag-right-center{right: -1px; top: calc(50% - 1px); cursor: e-resize;}
-    .drag-right-bottom{right: -1px; bottom: -1px; cursor: se-resize;}
-    .drag-top{left: calc(50% - 1px); top: -1px; cursor: n-resize;}
-    .drag-bottom{left: calc(50% - 1px); bottom: -1px; cursor: s-resize;}
+    .drag-left-top{left: 0px; top: 0px; cursor: nw-resize;}
+    .drag-left-center{left: 0px; top: 50%; cursor: w-resize;}
+    .drag-left-bottom{left: 0px; bottom: 0px; cursor: sw-resize}
+    .drag-right-top{right: 0px; top: 0px; cursor: ne-resize;}
+    .drag-right-center{right: 0px; top: 50%; cursor: e-resize;}
+    .drag-right-bottom{right: 0; bottom: 0; cursor: se-resize;}
+    .drag-top{left: 50%; top: 0px; cursor: n-resize;}
+    .drag-bottom{left: 50%; bottom: 0px; cursor: s-resize;}
 </style>

@@ -14,7 +14,7 @@
                     {left: 100, top: 100, active: false, index: '222', width: 200, height: 100, zIndex: 20},
                 ],
                 option: { // 整个页面关于drag的统一配置
-                    scale: 1,
+                    scale: .2,
                     dragable: true
                 }
             }
@@ -30,13 +30,22 @@
                 })
                 e.active = true
                 e.zIndex = 9999
+                this.oldLeft = e.left
+                this.oldTop = e.top
+                console.log('start:::::::::')
             },
             moving(e,item){
+
                 item.left = e.left
                 item.top = e.top
+
+                // console.log('chachahhhhhchhchhchc', )
+
+
             },
-            movestop(e){
+            movestop(e, item){
                console.log('movestop')
+
             },
             clearMove(){
                 this.lists.forEach(item => {
@@ -44,10 +53,8 @@
                 })
             },
             focus(item){
-                console.log('focus', item)
             },
             blur(item){
-                console.log('blur', item)
             }
         }
     });
@@ -61,7 +68,7 @@
                 :data="item"
                 :option="option"
                 @movestart="movestart(item)"
-                @movestop="movestop"
+                @movestop="movestop($event, item)"
                 @moving="moving($event,item)"
                 @focus="focus(item)"
                 @change-size-stop="changeSizeStop"
@@ -71,5 +78,5 @@
 
 <style>
     html,body{margin: 0; padding: 0; width: 100%; height: 100%;}
-    #app{width: 100%; height: 100%;}
+    #app{width: 100%; height: 100%; transform: scale(.2); transform-origin: 0 0 ;}
 </style>

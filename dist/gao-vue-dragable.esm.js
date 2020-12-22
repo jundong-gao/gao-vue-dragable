@@ -45,8 +45,7 @@ var script = {
     //     immediate: true
     // },
     option: {
-      handler() {
-        console.log('option改变', this.option);
+      handler() {// console.log('option改变', this.option)
       },
 
       deep: true,
@@ -65,7 +64,7 @@ var script = {
     },
 
     dianStyle() {
-      let size = 4 * (1 / this.option.scale || 1);
+      let size = 3 * (1 / this.option.scale || 1);
       return {
         width: size + 'px',
         height: size + 'px'
@@ -84,11 +83,13 @@ var script = {
 
     down(e) {
       if (!this.option.dragable) return;
-      this.sb_bkx = e.clientX - e.target.offsetLeft;
-      this.sb_bky = e.clientY - e.target.offsetTop;
+      this.sb_bkx = e.clientX;
+      this.sb_bky = e.clientY;
       this.start = {
-        x: e.clientX,
-        y: e.clientY
+        mouseX: e.clientX,
+        mouseY: e.clientY,
+        left: this.data.left,
+        top: this.data.top
       };
       this.isDown = true;
 
@@ -108,19 +109,29 @@ var script = {
 
     move(e) {
       if (!this.option.dragable) return;
-      if (!this.isDown) return;
-      let left = e.clientX - this.sb_bkx;
-      let top = e.clientY - this.sb_bky; // this.item.left = left
+      if (!this.isDown) return; // let left = e.clientX - this.sb_bkx
+      // let top = e.clientY - this.sb_bky
+      // this.item.left = left
       // this.item.top = top
       // 移动选中组件时 偏移的坐标
+      // let cha = {
+      //     offsetx: (e.clientX - this.start.x) * 2,
+      //     offsety: (e.clientY - this.start.y) * 2,
+      //
+      //     offsetx1: (e.clientX - this.start.x) ,
+      //     offsety1: (e.clientY - this.start.y) ,
+      //
+      //     left: left ,
+      //     top: top
+      // }
+      // console.log(JSON.stringify(cha))
 
-      let cha = {
-        offsetx: e.clientX - this.start.x,
-        offsety: e.clientY - this.start.y,
-        left: left,
-        top: top
-      };
-      this.$emit('moving', cha);
+      let newLeft = this.round(this.start.left + (e.clientX - this.start.mouseX) / this.option.scale);
+      let newTop = this.round(this.start.top + (e.clientY - this.start.mouseY) / this.option.scale);
+      this.$emit('moving', {
+        left: newLeft,
+        top: newTop
+      });
     },
 
     up(e) {
@@ -128,7 +139,9 @@ var script = {
       this.dianIsDown = false;
       document.onmousemove = null;
       document.onmouseup = null;
-      this.$emit('movestop', this.item);
+      let left = e.clientX - this.sb_bkx;
+      let top = e.clientY - this.sb_bky;
+      this.$emit('movestop');
     },
 
     clickStop() {
@@ -159,51 +172,51 @@ var script = {
 
         switch (positon) {
           case 'left-top':
-            currObj.width = this.numVal(o_width - cha.x);
-            currObj.height = this.numVal(o_height - cha.y);
-            currObj.left = o_left + cha.x;
-            currObj.top = o_top + cha.y;
+            currObj.width = this.round(this.numVal(o_width - cha.x / this.option.scale));
+            currObj.height = this.round(this.numVal(o_height - cha.y / this.option.scale));
+            currObj.left = this.round(o_left + cha.x / this.option.scale);
+            currObj.top = this.round(o_top + cha.y / this.option.scale);
             break;
 
           case 'left-center':
-            currObj.width = this.numVal(o_width - cha.x);
-            currObj.left = o_left + cha.x;
+            currObj.width = this.round(this.numVal(o_width - cha.x / this.option.scale));
+            currObj.left = this.round(o_left + cha.x / this.option.scale);
             break;
 
           case 'left-bottom':
-            currObj.width = this.numVal(o_width - cha.x);
-            currObj.height = this.numVal(o_height + cha.y);
-            currObj.left = o_left + cha.x;
+            currObj.width = this.round(this.numVal(o_width - cha.x / this.option.scale));
+            currObj.height = this.round(this.numVal(o_height + cha.y / this.option.scale));
+            currObj.left = this.round(o_left + cha.x / this.option.scale);
             break;
 
           case 'left-bottom':
-            currObj.width = this.numVal(o_width - cha.x);
-            currObj.height = this.numVal(o_height + cha.y);
-            currObj.left = o_left + cha.x;
+            currObj.width = this.round(this.numVal(o_width - cha.x / this.option.scale));
+            currObj.height = this.round(this.numVal(o_height + cha.y / this.option.scale));
+            currObj.left = this.round(o_left + cha.x / this.option.scale);
             break;
 
           case 'top':
-            currObj.height = this.numVal(o_height - cha.y);
-            currObj.top = o_top + cha.y;
+            currObj.height = this.round(this.numVal(o_height - cha.y / this.option.scale));
+            currObj.top = this.round(o_top + cha.y / this.option.scale);
             break;
 
           case 'bottom':
-            currObj.height = this.numVal(o_height + cha.y);
+            currObj.height = this.round(this.numVal(o_height + cha.y / this.option.scale));
             break;
 
           case 'right-top':
-            currObj.width = this.numVal(o_width + cha.x);
-            currObj.height = this.numVal(o_height - cha.y);
-            currObj.top = o_top + cha.y;
+            currObj.width = this.round(this.numVal(o_width + cha.x / this.option.scale));
+            currObj.height = this.round(this.numVal(o_height - cha.y / this.option.scale));
+            currObj.top = this.round(o_top + cha.y / this.option.scale);
             break;
 
           case 'right-center':
-            currObj.width = this.numVal(o_width + cha.x);
+            currObj.width = this.round(this.numVal(o_width + cha.x / this.option.scale));
             break;
 
           case 'right-bottom':
-            currObj.width = this.numVal(o_width + cha.x);
-            currObj.height = this.numVal(o_height + cha.y);
+            currObj.width = this.round(this.numVal(o_width + cha.x / this.option.scale));
+            currObj.height = this.round(this.numVal(o_height + cha.y / this.option.scale));
             break;
         }
       };
@@ -228,6 +241,10 @@ var script = {
       if (!this.option.dragable) return;
       e.target.classList.remove('hover');
       this.$emit('blur');
+    },
+
+    round(val) {
+      return Math.round(Number(val));
     }
 
   }
@@ -478,8 +495,8 @@ var __vue_staticRenderFns__ = [];
 
 const __vue_inject_styles__ = function (inject) {
   if (!inject) return;
-  inject("data-v-2dc92c8c_0", {
-    source: ".drag[data-v-2dc92c8c]{z-index:1;width:50px;height:50px;position:absolute;cursor:pointer;user-select:none}.drag.active[data-v-2dc92c8c]::before{font-size:12px;line-height:15px;content:attr(data-left);display:block;position:absolute;left:-100px;top:-15px;width:100px;text-align:right;color:rgba(0,0,255,.5);border-bottom:1px solid rgba(0,0,255,.1);padding-right:20px;box-sizing:border-box}.drag.active[data-v-2dc92c8c]::after{font-size:12px;line-height:15px;content:attr(data-top);display:block;position:absolute;top:-100px;left:0;padding-right:25px;box-sizing:border-box;width:100px;transform:rotate(90deg);transform-origin:left top;text-align:right;color:rgba(0,0,255,.5);border-top:1px solid rgba(0,0,255,.1)}.drag.hover[data-v-2dc92c8c]{background-color:rgba(0,0,255,.1)}.drag.active[data-v-2dc92c8c]{background-color:rgba(0,0,255,.3)}.drag-dian[data-v-2dc92c8c]{position:absolute;background-color:#fff;border:1px solid #000}.drag-left-top[data-v-2dc92c8c]{left:-1px;top:-1px;cursor:nw-resize}.drag-left-center[data-v-2dc92c8c]{left:-1px;top:calc(50% - 1px);cursor:w-resize}.drag-left-bottom[data-v-2dc92c8c]{left:-1px;bottom:-1px;cursor:sw-resize}.drag-right-top[data-v-2dc92c8c]{right:-1px;top:-1px;cursor:ne-resize}.drag-right-center[data-v-2dc92c8c]{right:-1px;top:calc(50% - 1px);cursor:e-resize}.drag-right-bottom[data-v-2dc92c8c]{right:-1px;bottom:-1px;cursor:se-resize}.drag-top[data-v-2dc92c8c]{left:calc(50% - 1px);top:-1px;cursor:n-resize}.drag-bottom[data-v-2dc92c8c]{left:calc(50% - 1px);bottom:-1px;cursor:s-resize}",
+  inject("data-v-7ef6aaf0_0", {
+    source: ".drag[data-v-7ef6aaf0]{z-index:1;width:50px;height:50px;position:absolute;cursor:pointer;user-select:none}.drag.active[data-v-7ef6aaf0]::before{font-size:12px;line-height:15px;content:attr(data-left);display:block;position:absolute;left:-100px;top:-15px;width:100px;text-align:right;color:rgba(0,0,255,.5);border-bottom:1px solid rgba(0,0,255,.1);padding-right:20px;box-sizing:border-box}.drag.active[data-v-7ef6aaf0]::after{font-size:12px;line-height:15px;content:attr(data-top);display:block;position:absolute;top:-100px;left:0;padding-right:25px;box-sizing:border-box;width:100px;transform:rotate(90deg);transform-origin:left top;text-align:right;color:rgba(0,0,255,.5);border-top:1px solid rgba(0,0,255,.1)}.drag.hover[data-v-7ef6aaf0]{background-color:rgba(0,0,255,.1)}.drag.active[data-v-7ef6aaf0]{background-color:rgba(0,0,255,.3)}.drag-dian[data-v-7ef6aaf0]{position:absolute;background-color:#fff;border:1px solid #000}.drag-left-top[data-v-7ef6aaf0]{left:0;top:0;cursor:nw-resize}.drag-left-center[data-v-7ef6aaf0]{left:0;top:50%;cursor:w-resize}.drag-left-bottom[data-v-7ef6aaf0]{left:0;bottom:0;cursor:sw-resize}.drag-right-top[data-v-7ef6aaf0]{right:0;top:0;cursor:ne-resize}.drag-right-center[data-v-7ef6aaf0]{right:0;top:50%;cursor:e-resize}.drag-right-bottom[data-v-7ef6aaf0]{right:0;bottom:0;cursor:se-resize}.drag-top[data-v-7ef6aaf0]{left:50%;top:0;cursor:n-resize}.drag-bottom[data-v-7ef6aaf0]{left:50%;bottom:0;cursor:s-resize}",
     map: undefined,
     media: undefined
   });
@@ -487,7 +504,7 @@ const __vue_inject_styles__ = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__ = "data-v-2dc92c8c";
+const __vue_scope_id__ = "data-v-7ef6aaf0";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;
