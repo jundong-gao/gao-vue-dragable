@@ -12,6 +12,7 @@
                 sb_bkx: 0,
                 sb_bky: 0,
                 start: {},
+                hoverDrag: false
             }
         },
         watch: {
@@ -207,12 +208,12 @@
             },
             mouseover(e){
                 if(!this.option.dragable) return
-                e.target.classList.add('hover')
+                this.hoverDrag = true
                 this.$emit('focus')
             },
             mouseleave(e){
                 if(!this.option.dragable) return
-                e.target.classList.remove('hover')
+                this.hoverDrag = false
                 this.$emit('blur')
             },
             round(val){
@@ -223,12 +224,12 @@
 </script>
 
 <template>
-    <div class="drag"
+    <div class="drag" 
          :data-left="data.left"
          :data-top="data.top"
          :data-scale="2"
          :ref="key"
-         :class="{active: data.active}"
+         :class="{active: data.active, hover: hoverDrag}"
          :style="style"
          @mousedown.stop="down"
          @mouseover.stop="mouseover"

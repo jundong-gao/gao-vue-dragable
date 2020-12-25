@@ -32,7 +32,8 @@ var script = {
       dianIsDown: false,
       sb_bkx: 0,
       sb_bky: 0,
-      start: {}
+      start: {},
+      hoverDrag: false
     };
   },
 
@@ -247,13 +248,13 @@ var script = {
 
     mouseover(e) {
       if (!this.option.dragable) return;
-      e.target.classList.add('hover');
+      this.hoverDrag = true;
       this.$emit('focus');
     },
 
     mouseleave(e) {
       if (!this.option.dragable) return;
-      e.target.classList.remove('hover');
+      this.hoverDrag = false;
       this.$emit('blur');
     },
 
@@ -407,7 +408,8 @@ var __vue_render__ = function () {
     ref: _vm.key,
     staticClass: "drag",
     class: {
-      active: _vm.data.active
+      active: _vm.data.active,
+      hover: _vm.hoverDrag
     },
     style: _vm.style,
     attrs: {
@@ -516,8 +518,8 @@ var __vue_staticRenderFns__ = [];
 
 const __vue_inject_styles__ = function (inject) {
   if (!inject) return;
-  inject("data-v-24a468e6_0", {
-    source: ".drag[data-v-24a468e6]{z-index:1;width:50px;height:50px;position:absolute;cursor:pointer;user-select:none}.drag.active .drag-x[data-v-24a468e6]{font-size:12px;line-height:15px;display:block;position:absolute;left:-100px;top:-15px;width:100px;text-align:right;color:rgba(0,0,255,.5);border-bottom:1px solid rgba(0,0,255,.1);padding-right:10px;box-sizing:border-box}.drag.active .drag-y[data-v-24a468e6]{font-size:12px;line-height:15px;display:block;position:absolute;left:0;top:0;padding-left:10px;box-sizing:border-box;width:100px;color:rgba(0,0,255,.5);border-top:1px solid rgba(0,0,255,.1)}.drag.hover[data-v-24a468e6]{background-color:rgba(0,0,255,.1)}.drag.active[data-v-24a468e6]{background-color:rgba(0,0,255,.3)}.drag-dian[data-v-24a468e6]{position:absolute;background-color:#fff;border:1px solid #000}.drag-left-top[data-v-24a468e6]{left:0;top:0;cursor:nw-resize}.drag-left-center[data-v-24a468e6]{left:0;top:50%;cursor:w-resize}.drag-left-bottom[data-v-24a468e6]{left:0;bottom:0;cursor:sw-resize}.drag-right-top[data-v-24a468e6]{right:0;top:0;cursor:ne-resize}.drag-right-center[data-v-24a468e6]{right:0;top:50%;cursor:e-resize}.drag-right-bottom[data-v-24a468e6]{right:0;bottom:0;cursor:se-resize}.drag-top[data-v-24a468e6]{left:50%;top:0;cursor:n-resize}.drag-bottom[data-v-24a468e6]{left:50%;bottom:0;cursor:s-resize}",
+  inject("data-v-74cd1a68_0", {
+    source: ".drag[data-v-74cd1a68]{z-index:1;width:50px;height:50px;position:absolute;cursor:pointer;user-select:none}.drag.active .drag-x[data-v-74cd1a68]{font-size:12px;line-height:15px;display:block;position:absolute;left:-100px;top:-15px;width:100px;text-align:right;color:rgba(0,0,255,.5);border-bottom:1px solid rgba(0,0,255,.1);padding-right:10px;box-sizing:border-box}.drag.active .drag-y[data-v-74cd1a68]{font-size:12px;line-height:15px;display:block;position:absolute;left:0;top:0;padding-left:10px;box-sizing:border-box;width:100px;color:rgba(0,0,255,.5);border-top:1px solid rgba(0,0,255,.1)}.drag.hover[data-v-74cd1a68]{background-color:rgba(0,0,255,.1)}.drag.active[data-v-74cd1a68]{background-color:rgba(0,0,255,.3)}.drag-dian[data-v-74cd1a68]{position:absolute;background-color:#fff;border:1px solid #000}.drag-left-top[data-v-74cd1a68]{left:0;top:0;cursor:nw-resize}.drag-left-center[data-v-74cd1a68]{left:0;top:50%;cursor:w-resize}.drag-left-bottom[data-v-74cd1a68]{left:0;bottom:0;cursor:sw-resize}.drag-right-top[data-v-74cd1a68]{right:0;top:0;cursor:ne-resize}.drag-right-center[data-v-74cd1a68]{right:0;top:50%;cursor:e-resize}.drag-right-bottom[data-v-74cd1a68]{right:0;bottom:0;cursor:se-resize}.drag-top[data-v-74cd1a68]{left:50%;top:0;cursor:n-resize}.drag-bottom[data-v-74cd1a68]{left:50%;bottom:0;cursor:s-resize}",
     map: undefined,
     media: undefined
   });
@@ -525,7 +527,7 @@ const __vue_inject_styles__ = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__ = "data-v-24a468e6";
+const __vue_scope_id__ = "data-v-74cd1a68";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;
