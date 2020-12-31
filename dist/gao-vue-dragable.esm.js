@@ -79,10 +79,32 @@ var script = {
     },
 
     dianStyle() {
-      let size = 3 * (1 / this.option.scale || 1);
-      return {
-        width: size + 'px',
-        height: size + 'px'
+      return function (position) {
+        let size = 3 * (1 / this.option.scale || 1);
+        let config = {
+          width: size + 'px',
+          height: size + 'px'
+        };
+
+        switch (position) {
+          case 'left-center':
+            config.top = `calc(50% - ${size / 2}px)`;
+            break;
+
+          case 'top':
+            config.left = `calc(50% - ${size / 2}px)`;
+            break;
+
+          case 'right-center':
+            config.top = `calc(50% - ${size / 2}px)`;
+            break;
+
+          case 'bottom':
+            config.left = `calc(50% - ${size / 2}px)`;
+            break;
+        }
+
+        return config;
       };
     }
 
@@ -440,7 +462,7 @@ var __vue_render__ = function () {
     style: _vm.dragYStyle
   }, [_vm._v("Y：" + _vm._s(_vm.data.top))])] : _vm._e(), _vm._v(" "), _vm.data.active ? [_c('div', {
     staticClass: "drag-dian drag-left-top",
-    style: _vm.dianStyle,
+    style: _vm.dianStyle('left-top'),
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -449,7 +471,7 @@ var __vue_render__ = function () {
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "drag-dian drag-left-center",
-    style: _vm.dianStyle,
+    style: _vm.dianStyle('left-center'),
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -458,7 +480,7 @@ var __vue_render__ = function () {
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "drag-dian drag-left-bottom",
-    style: _vm.dianStyle,
+    style: _vm.dianStyle('left-bottom'),
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -467,7 +489,7 @@ var __vue_render__ = function () {
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "drag-dian drag-top",
-    style: _vm.dianStyle,
+    style: _vm.dianStyle('top'),
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -476,7 +498,7 @@ var __vue_render__ = function () {
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "drag-dian drag-bottom",
-    style: _vm.dianStyle,
+    style: _vm.dianStyle('bottom'),
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -485,7 +507,7 @@ var __vue_render__ = function () {
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "drag-dian drag-right-top",
-    style: _vm.dianStyle,
+    style: _vm.dianStyle('right-top'),
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -494,7 +516,7 @@ var __vue_render__ = function () {
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "drag-dian drag-right-center",
-    style: _vm.dianStyle,
+    style: _vm.dianStyle('right-center'),
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -503,7 +525,7 @@ var __vue_render__ = function () {
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "drag-dian drag-right-bottom",
-    style: _vm.dianStyle,
+    style: _vm.dianStyle('right-bottom'),
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
@@ -518,8 +540,8 @@ var __vue_staticRenderFns__ = [];
 
 const __vue_inject_styles__ = function (inject) {
   if (!inject) return;
-  inject("data-v-74cd1a68_0", {
-    source: ".drag[data-v-74cd1a68]{z-index:1;width:50px;height:50px;position:absolute;cursor:pointer;user-select:none}.drag.active .drag-x[data-v-74cd1a68]{font-size:12px;line-height:15px;display:block;position:absolute;left:-100px;top:-15px;width:100px;text-align:right;color:rgba(0,0,255,.5);border-bottom:1px solid rgba(0,0,255,.1);padding-right:10px;box-sizing:border-box}.drag.active .drag-y[data-v-74cd1a68]{font-size:12px;line-height:15px;display:block;position:absolute;left:0;top:0;padding-left:10px;box-sizing:border-box;width:100px;color:rgba(0,0,255,.5);border-top:1px solid rgba(0,0,255,.1)}.drag.hover[data-v-74cd1a68]{background-color:rgba(0,0,255,.1)}.drag.active[data-v-74cd1a68]{background-color:rgba(0,0,255,.3)}.drag-dian[data-v-74cd1a68]{position:absolute;background-color:#fff;border:1px solid #000}.drag-left-top[data-v-74cd1a68]{left:0;top:0;cursor:nw-resize}.drag-left-center[data-v-74cd1a68]{left:0;top:50%;cursor:w-resize}.drag-left-bottom[data-v-74cd1a68]{left:0;bottom:0;cursor:sw-resize}.drag-right-top[data-v-74cd1a68]{right:0;top:0;cursor:ne-resize}.drag-right-center[data-v-74cd1a68]{right:0;top:50%;cursor:e-resize}.drag-right-bottom[data-v-74cd1a68]{right:0;bottom:0;cursor:se-resize}.drag-top[data-v-74cd1a68]{left:50%;top:0;cursor:n-resize}.drag-bottom[data-v-74cd1a68]{left:50%;bottom:0;cursor:s-resize}",
+  inject("data-v-47f7d7c1_0", {
+    source: ".drag[data-v-47f7d7c1]{z-index:1;width:50px;height:50px;position:absolute;cursor:pointer;user-select:none}.drag.active .drag-x[data-v-47f7d7c1]{font-size:12px;line-height:15px;display:block;position:absolute;left:-100px;top:-15px;width:100px;text-align:right;color:rgba(0,0,255,.5);border-bottom:1px solid rgba(0,0,255,.1);padding-right:10px;box-sizing:border-box}.drag.active .drag-y[data-v-47f7d7c1]{font-size:12px;line-height:15px;display:block;position:absolute;left:0;top:0;padding-left:10px;box-sizing:border-box;width:100px;color:rgba(0,0,255,.5);border-top:1px solid rgba(0,0,255,.1)}.drag.hover[data-v-47f7d7c1]{background-color:rgba(0,0,255,.1)}.drag.active[data-v-47f7d7c1]{background-color:rgba(0,0,255,.3)}.drag-dian[data-v-47f7d7c1]{position:absolute;background-color:#fff;border:1px solid #000}.drag-left-top[data-v-47f7d7c1]{left:0;top:0;cursor:nw-resize}.drag-left-center[data-v-47f7d7c1]{left:0;cursor:w-resize}.drag-left-bottom[data-v-47f7d7c1]{left:0;bottom:0;cursor:sw-resize}.drag-right-top[data-v-47f7d7c1]{right:0;top:0;cursor:ne-resize}.drag-right-center[data-v-47f7d7c1]{right:0;cursor:e-resize}.drag-right-bottom[data-v-47f7d7c1]{right:0;bottom:0;cursor:se-resize}.drag-top[data-v-47f7d7c1]{top:0;cursor:n-resize}.drag-bottom[data-v-47f7d7c1]{bottom:0;cursor:s-resize}",
     map: undefined,
     media: undefined
   });
@@ -527,7 +549,7 @@ const __vue_inject_styles__ = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__ = "data-v-74cd1a68";
+const __vue_scope_id__ = "data-v-47f7d7c1";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;

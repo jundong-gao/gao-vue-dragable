@@ -71,10 +71,32 @@ var createUUID = function createUUID() {
       };
     },
     dianStyle: function dianStyle() {
-      var size = 3 * (1 / this.option.scale || 1);
-      return {
-        width: size + 'px',
-        height: size + 'px'
+      return function (position) {
+        var size = 3 * (1 / this.option.scale || 1);
+        var config = {
+          width: size + 'px',
+          height: size + 'px'
+        };
+
+        switch (position) {
+          case 'left-center':
+            config.top = "calc(50% - ".concat(size / 2, "px)");
+            break;
+
+          case 'top':
+            config.left = "calc(50% - ".concat(size / 2, "px)");
+            break;
+
+          case 'right-center':
+            config.top = "calc(50% - ".concat(size / 2, "px)");
+            break;
+
+          case 'bottom':
+            config.left = "calc(50% - ".concat(size / 2, "px)");
+            break;
+        }
+
+        return config;
       };
     }
   },
@@ -401,7 +423,7 @@ var __vue_render__ = function __vue_render__() {
         return _vm.clickStop($event);
       }
     }
-  }, [_vm._t("default"), _vm._ssrNode(" " + (_vm.data.active ? "<div class=\"drag-x flex-aic\"" + _vm._ssrStyle(null, _vm.dragXStyle, null) + " data-v-74cd1a68>" + _vm._ssrEscape("X：" + _vm._s(_vm.data.left)) + "</div> <div class=\"drag-y flex-aic\"" + _vm._ssrStyle(null, _vm.dragYStyle, null) + " data-v-74cd1a68>" + _vm._ssrEscape("Y：" + _vm._s(_vm.data.top)) + "</div>" : "<!---->") + " " + (_vm.data.active ? "<div class=\"drag-dian drag-left-top\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-74cd1a68></div> <div class=\"drag-dian drag-left-center\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-74cd1a68></div> <div class=\"drag-dian drag-left-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-74cd1a68></div> <div class=\"drag-dian drag-top\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-74cd1a68></div> <div class=\"drag-dian drag-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-74cd1a68></div> <div class=\"drag-dian drag-right-top\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-74cd1a68></div> <div class=\"drag-dian drag-right-center\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-74cd1a68></div> <div class=\"drag-dian drag-right-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle, null) + " data-v-74cd1a68></div>" : "<!---->"))], 2);
+  }, [_vm._t("default"), _vm._ssrNode(" " + (_vm.data.active ? "<div class=\"drag-x flex-aic\"" + _vm._ssrStyle(null, _vm.dragXStyle, null) + " data-v-47f7d7c1>" + _vm._ssrEscape("X：" + _vm._s(_vm.data.left)) + "</div> <div class=\"drag-y flex-aic\"" + _vm._ssrStyle(null, _vm.dragYStyle, null) + " data-v-47f7d7c1>" + _vm._ssrEscape("Y：" + _vm._s(_vm.data.top)) + "</div>" : "<!---->") + " " + (_vm.data.active ? "<div class=\"drag-dian drag-left-top\"" + _vm._ssrStyle(null, _vm.dianStyle('left-top'), null) + " data-v-47f7d7c1></div> <div class=\"drag-dian drag-left-center\"" + _vm._ssrStyle(null, _vm.dianStyle('left-center'), null) + " data-v-47f7d7c1></div> <div class=\"drag-dian drag-left-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle('left-bottom'), null) + " data-v-47f7d7c1></div> <div class=\"drag-dian drag-top\"" + _vm._ssrStyle(null, _vm.dianStyle('top'), null) + " data-v-47f7d7c1></div> <div class=\"drag-dian drag-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle('bottom'), null) + " data-v-47f7d7c1></div> <div class=\"drag-dian drag-right-top\"" + _vm._ssrStyle(null, _vm.dianStyle('right-top'), null) + " data-v-47f7d7c1></div> <div class=\"drag-dian drag-right-center\"" + _vm._ssrStyle(null, _vm.dianStyle('right-center'), null) + " data-v-47f7d7c1></div> <div class=\"drag-dian drag-right-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle('right-bottom'), null) + " data-v-47f7d7c1></div>" : "<!---->"))], 2);
 };
 
 var __vue_staticRenderFns__ = [];
@@ -409,8 +431,8 @@ var __vue_staticRenderFns__ = [];
 
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-74cd1a68_0", {
-    source: ".drag[data-v-74cd1a68]{z-index:1;width:50px;height:50px;position:absolute;cursor:pointer;user-select:none}.drag.active .drag-x[data-v-74cd1a68]{font-size:12px;line-height:15px;display:block;position:absolute;left:-100px;top:-15px;width:100px;text-align:right;color:rgba(0,0,255,.5);border-bottom:1px solid rgba(0,0,255,.1);padding-right:10px;box-sizing:border-box}.drag.active .drag-y[data-v-74cd1a68]{font-size:12px;line-height:15px;display:block;position:absolute;left:0;top:0;padding-left:10px;box-sizing:border-box;width:100px;color:rgba(0,0,255,.5);border-top:1px solid rgba(0,0,255,.1)}.drag.hover[data-v-74cd1a68]{background-color:rgba(0,0,255,.1)}.drag.active[data-v-74cd1a68]{background-color:rgba(0,0,255,.3)}.drag-dian[data-v-74cd1a68]{position:absolute;background-color:#fff;border:1px solid #000}.drag-left-top[data-v-74cd1a68]{left:0;top:0;cursor:nw-resize}.drag-left-center[data-v-74cd1a68]{left:0;top:50%;cursor:w-resize}.drag-left-bottom[data-v-74cd1a68]{left:0;bottom:0;cursor:sw-resize}.drag-right-top[data-v-74cd1a68]{right:0;top:0;cursor:ne-resize}.drag-right-center[data-v-74cd1a68]{right:0;top:50%;cursor:e-resize}.drag-right-bottom[data-v-74cd1a68]{right:0;bottom:0;cursor:se-resize}.drag-top[data-v-74cd1a68]{left:50%;top:0;cursor:n-resize}.drag-bottom[data-v-74cd1a68]{left:50%;bottom:0;cursor:s-resize}",
+  inject("data-v-47f7d7c1_0", {
+    source: ".drag[data-v-47f7d7c1]{z-index:1;width:50px;height:50px;position:absolute;cursor:pointer;user-select:none}.drag.active .drag-x[data-v-47f7d7c1]{font-size:12px;line-height:15px;display:block;position:absolute;left:-100px;top:-15px;width:100px;text-align:right;color:rgba(0,0,255,.5);border-bottom:1px solid rgba(0,0,255,.1);padding-right:10px;box-sizing:border-box}.drag.active .drag-y[data-v-47f7d7c1]{font-size:12px;line-height:15px;display:block;position:absolute;left:0;top:0;padding-left:10px;box-sizing:border-box;width:100px;color:rgba(0,0,255,.5);border-top:1px solid rgba(0,0,255,.1)}.drag.hover[data-v-47f7d7c1]{background-color:rgba(0,0,255,.1)}.drag.active[data-v-47f7d7c1]{background-color:rgba(0,0,255,.3)}.drag-dian[data-v-47f7d7c1]{position:absolute;background-color:#fff;border:1px solid #000}.drag-left-top[data-v-47f7d7c1]{left:0;top:0;cursor:nw-resize}.drag-left-center[data-v-47f7d7c1]{left:0;cursor:w-resize}.drag-left-bottom[data-v-47f7d7c1]{left:0;bottom:0;cursor:sw-resize}.drag-right-top[data-v-47f7d7c1]{right:0;top:0;cursor:ne-resize}.drag-right-center[data-v-47f7d7c1]{right:0;cursor:e-resize}.drag-right-bottom[data-v-47f7d7c1]{right:0;bottom:0;cursor:se-resize}.drag-top[data-v-47f7d7c1]{top:0;cursor:n-resize}.drag-bottom[data-v-47f7d7c1]{bottom:0;cursor:s-resize}",
     map: undefined,
     media: undefined
   });
@@ -418,10 +440,10 @@ var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__ = "data-v-74cd1a68";
+var __vue_scope_id__ = "data-v-47f7d7c1";
 /* module identifier */
 
-var __vue_module_identifier__ = "data-v-74cd1a68";
+var __vue_module_identifier__ = "data-v-47f7d7c1";
 /* functional template */
 
 var __vue_is_functional_template__ = false;
