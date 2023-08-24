@@ -1,4 +1,4 @@
-## 拖动组件 （[预览地址](http://drag.gaojundong.com)）
+## 拖动组件 （[预览地址](http://gaojundong.com/dragable)）
 
 ### 安装
 

@@ -4,10 +4,8 @@
  * Date: 12/18/20
  * Time: 1:19 PM
  */
-
 const createUUID = function () {
   var d = Date.parse(new Date());
-
   if (window.performance && typeof window.performance.now === "function") {
     d += performance.now(); //use high-precision timer if available
   }
@@ -23,7 +21,6 @@ const createUUID = function () {
 var script = {
   name: "GaoVueDragable",
   props: ['option', 'data'],
-
   data() {
     return {
       key: 'drag' + createUUID(),
@@ -36,7 +33,6 @@ var script = {
       hoverDrag: false
     };
   },
-
   watch: {
     // data: {
     //     handler() {
@@ -46,9 +42,9 @@ var script = {
     //     immediate: true
     // },
     option: {
-      handler() {// console.log('option改变', this.option)
+      handler() {
+        // console.log('option改变', this.option)
       },
-
       deep: true,
       immediate: true
     }
@@ -63,21 +59,18 @@ var script = {
         zIndex: this.data.zIndex
       };
     },
-
     dragXStyle() {
       return {
         transform: `scale(${1 / this.option.scale})`,
         'transform-origin': 'right bottom'
       };
     },
-
     dragYStyle() {
       return {
         transform: `scale(${1 / this.option.scale}) rotate(-90deg)`,
         'transform-origin': '0 0'
       };
     },
-
     dianStyle() {
       return function (position) {
         let size = 3 * (1 / this.option.scale || 1);
@@ -85,29 +78,23 @@ var script = {
           width: size + 'px',
           height: size + 'px'
         };
-
         switch (position) {
           case 'left-center':
             config.top = `calc(50% - ${size / 2}px)`;
             break;
-
           case 'top':
             config.left = `calc(50% - ${size / 2}px)`;
             break;
-
           case 'right-center':
             config.top = `calc(50% - ${size / 2}px)`;
             break;
-
           case 'bottom':
             config.left = `calc(50% - ${size / 2}px)`;
             break;
         }
-
         return config;
       };
     }
-
   },
   methods: {
     setPx(val) {
@@ -117,7 +104,6 @@ var script = {
         return '0px';
       }
     },
-
     down(e) {
       if (!this.option.dragable) return;
       this.sb_bkx = e.clientX;
@@ -129,27 +115,25 @@ var script = {
         top: this.data.top
       };
       this.isDown = true;
-
       document.onmousemove = e => {
         this.move(e);
       };
-
       document.onmouseup = e => {
         this.up(e);
       };
-
       this.$emit('movestart', {
         start: this.start,
         item: this.item
       });
     },
-
     move(e) {
       if (!this.option.dragable) return;
-      if (!this.isDown) return; // let left = e.clientX - this.sb_bkx
+      if (!this.isDown) return;
+      // let left = e.clientX - this.sb_bkx
       // let top = e.clientY - this.sb_bky
       // this.item.left = left
       // this.item.top = top
+
       // 移动选中组件时 偏移的坐标
       // let cha = {
       //     offsetx: (e.clientX - this.start.x) * 2,
@@ -170,21 +154,18 @@ var script = {
         top: newTop
       });
     },
-
     up(e) {
       this.isDown = false;
       this.dianIsDown = false;
       document.onmousemove = null;
       document.onmouseup = null;
-      let left = e.clientX - this.sb_bkx;
-      let top = e.clientY - this.sb_bky;
+      e.clientX - this.sb_bkx;
+      e.clientY - this.sb_bky;
       this.$emit('movestop');
     },
-
     clickStop() {
       return false;
     },
-
     dian(e, obj, type) {
       if (!this.option.dragable) return;
       this.dianIsDown = true;
@@ -198,7 +179,6 @@ var script = {
       let o_top = obj.top;
       let positon = type;
       let currObj = obj;
-
       document.onmousemove = e => {
         if (!this.option.dragable) return;
         if (!this.dianIsDown) return;
@@ -206,7 +186,6 @@ var script = {
           x: e.clientX - start.startx,
           y: e.clientY - start.starty
         };
-
         switch (positon) {
           case 'left-top':
             currObj.width = this.round(this.numVal(o_width - cha.x / this.option.scale));
@@ -214,76 +193,62 @@ var script = {
             currObj.left = this.round(o_left + cha.x / this.option.scale);
             currObj.top = this.round(o_top + cha.y / this.option.scale);
             break;
-
           case 'left-center':
             currObj.width = this.round(this.numVal(o_width - cha.x / this.option.scale));
             currObj.left = this.round(o_left + cha.x / this.option.scale);
             break;
-
           case 'left-bottom':
             currObj.width = this.round(this.numVal(o_width - cha.x / this.option.scale));
             currObj.height = this.round(this.numVal(o_height + cha.y / this.option.scale));
             currObj.left = this.round(o_left + cha.x / this.option.scale);
             break;
-
           case 'left-bottom':
             currObj.width = this.round(this.numVal(o_width - cha.x / this.option.scale));
             currObj.height = this.round(this.numVal(o_height + cha.y / this.option.scale));
             currObj.left = this.round(o_left + cha.x / this.option.scale);
             break;
-
           case 'top':
             currObj.height = this.round(this.numVal(o_height - cha.y / this.option.scale));
             currObj.top = this.round(o_top + cha.y / this.option.scale);
             break;
-
           case 'bottom':
             currObj.height = this.round(this.numVal(o_height + cha.y / this.option.scale));
             break;
-
           case 'right-top':
             currObj.width = this.round(this.numVal(o_width + cha.x / this.option.scale));
             currObj.height = this.round(this.numVal(o_height - cha.y / this.option.scale));
             currObj.top = this.round(o_top + cha.y / this.option.scale);
             break;
-
           case 'right-center':
             currObj.width = this.round(this.numVal(o_width + cha.x / this.option.scale));
             break;
-
           case 'right-bottom':
             currObj.width = this.round(this.numVal(o_width + cha.x / this.option.scale));
             currObj.height = this.round(this.numVal(o_height + cha.y / this.option.scale));
             break;
         }
       };
-
       document.onmouseup = e => {
         this.$emit('change-size-stop', this.data);
         this.up(e);
       };
     },
-
     numVal(val) {
       return val < 10 ? 10 : val;
     },
-
     mouseover(e) {
       if (!this.option.dragable) return;
       this.hoverDrag = true;
       this.$emit('focus');
     },
-
     mouseleave(e) {
       if (!this.option.dragable) return;
       this.hoverDrag = false;
       this.$emit('blur');
     },
-
     round(val) {
       return Math.round(Number(val));
     }
-
   }
 };
 
@@ -417,15 +382,12 @@ function addStyle(id, css) {
 
 /* script */
 const __vue_script__ = script;
-/* template */
 
+/* template */
 var __vue_render__ = function () {
   var _vm = this;
-
   var _h = _vm.$createElement;
-
   var _c = _vm._self._c || _h;
-
   return _c('div', {
     ref: _vm.key,
     staticClass: "drag",
@@ -442,16 +404,16 @@ var __vue_render__ = function () {
     on: {
       "mousedown": function ($event) {
         $event.stopPropagation();
-        return _vm.down($event);
+        return _vm.down.apply(null, arguments);
       },
       "mouseover": function ($event) {
         $event.stopPropagation();
-        return _vm.mouseover($event);
+        return _vm.mouseover.apply(null, arguments);
       },
       "mouseleave": _vm.mouseleave,
       "click": function ($event) {
         $event.stopPropagation();
-        return _vm.clickStop($event);
+        return _vm.clickStop.apply(null, arguments);
       }
     }
   }, [_vm._t("default"), _vm._v(" "), _vm.data.active ? [_c('div', {
@@ -534,10 +496,9 @@ var __vue_render__ = function () {
     }
   })] : _vm._e()], 2);
 };
-
 var __vue_staticRenderFns__ = [];
-/* style */
 
+/* style */
 const __vue_inject_styles__ = function (inject) {
   if (!inject) return;
   inject("data-v-47f7d7c1_0", {
@@ -547,14 +508,10 @@ const __vue_inject_styles__ = function (inject) {
   });
 };
 /* scoped */
-
-
 const __vue_scope_id__ = "data-v-47f7d7c1";
 /* module identifier */
-
 const __vue_module_identifier__ = undefined;
 /* functional template */
-
 const __vue_is_functional_template__ = false;
 /* style inject SSR */
 
@@ -567,16 +524,19 @@ const __vue_component__ = /*#__PURE__*/normalizeComponent({
 
 // Import vue component
 
+// install function executed by Vue.use()
 const install = function installGaoVueDragable(Vue) {
   if (install.installed) return;
   install.installed = true;
   Vue.component('GaoVueDragable', __vue_component__);
-}; // Create module definition for Vue.use()
+};
+
+// Inject install function into component - allows component
 // to be registered via Vue.use() as well as Vue.component()
+__vue_component__.install = install;
 
-
-__vue_component__.install = install; // Export component by default
+// It's possible to expose named exports when writing components that can
 // also be used as directives, etc. - eg. import { RollupDemoDirective } from 'rollup-demo';
 // export const RollupDemoDirective = component;
 
-export default __vue_component__;
+export { __vue_component__ as default };

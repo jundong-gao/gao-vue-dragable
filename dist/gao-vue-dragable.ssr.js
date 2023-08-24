@@ -4,10 +4,8 @@
  * Date: 12/18/20
  * Time: 1:19 PM
  */
-
 var createUUID = function createUUID() {
   var d = Date.parse(new Date());
-
   if (window.performance && typeof window.performance.now === "function") {
     d += performance.now(); //use high-precision timer if available
   }
@@ -42,7 +40,8 @@ var createUUID = function createUUID() {
     //     immediate: true
     // },
     option: {
-      handler: function handler() {// console.log('option改变', this.option)
+      handler: function handler() {
+        // console.log('option改变', this.option)
       },
       deep: true,
       immediate: true
@@ -77,25 +76,20 @@ var createUUID = function createUUID() {
           width: size + 'px',
           height: size + 'px'
         };
-
         switch (position) {
           case 'left-center':
             config.top = "calc(50% - ".concat(size / 2, "px)");
             break;
-
           case 'top':
             config.left = "calc(50% - ".concat(size / 2, "px)");
             break;
-
           case 'right-center':
             config.top = "calc(50% - ".concat(size / 2, "px)");
             break;
-
           case 'bottom':
             config.left = "calc(50% - ".concat(size / 2, "px)");
             break;
         }
-
         return config;
       };
     }
@@ -110,7 +104,6 @@ var createUUID = function createUUID() {
     },
     down: function down(e) {
       var _this = this;
-
       if (!this.option.dragable) return;
       this.sb_bkx = e.clientX;
       this.sb_bky = e.clientY;
@@ -121,15 +114,12 @@ var createUUID = function createUUID() {
         top: this.data.top
       };
       this.isDown = true;
-
       document.onmousemove = function (e) {
         _this.move(e);
       };
-
       document.onmouseup = function (e) {
         _this.up(e);
       };
-
       this.$emit('movestart', {
         start: this.start,
         item: this.item
@@ -137,10 +127,12 @@ var createUUID = function createUUID() {
     },
     move: function move(e) {
       if (!this.option.dragable) return;
-      if (!this.isDown) return; // let left = e.clientX - this.sb_bkx
+      if (!this.isDown) return;
+      // let left = e.clientX - this.sb_bkx
       // let top = e.clientY - this.sb_bky
       // this.item.left = left
       // this.item.top = top
+
       // 移动选中组件时 偏移的坐标
       // let cha = {
       //     offsetx: (e.clientX - this.start.x) * 2,
@@ -166,8 +158,8 @@ var createUUID = function createUUID() {
       this.dianIsDown = false;
       document.onmousemove = null;
       document.onmouseup = null;
-      var left = e.clientX - this.sb_bkx;
-      var top = e.clientY - this.sb_bky;
+      e.clientX - this.sb_bkx;
+      e.clientY - this.sb_bky;
       this.$emit('movestop');
     },
     clickStop: function clickStop() {
@@ -175,7 +167,6 @@ var createUUID = function createUUID() {
     },
     dian: function dian(e, obj, type) {
       var _this2 = this;
-
       if (!this.option.dragable) return;
       this.dianIsDown = true;
       var start = {
@@ -188,7 +179,6 @@ var createUUID = function createUUID() {
       var o_top = obj.top;
       var positon = type;
       var currObj = obj;
-
       document.onmousemove = function (e) {
         if (!_this2.option.dragable) return;
         if (!_this2.dianIsDown) return;
@@ -196,7 +186,6 @@ var createUUID = function createUUID() {
           x: e.clientX - start.startx,
           y: e.clientY - start.starty
         };
-
         switch (positon) {
           case 'left-top':
             currObj.width = _this2.round(_this2.numVal(o_width - cha.x / _this2.option.scale));
@@ -204,53 +193,43 @@ var createUUID = function createUUID() {
             currObj.left = _this2.round(o_left + cha.x / _this2.option.scale);
             currObj.top = _this2.round(o_top + cha.y / _this2.option.scale);
             break;
-
           case 'left-center':
             currObj.width = _this2.round(_this2.numVal(o_width - cha.x / _this2.option.scale));
             currObj.left = _this2.round(o_left + cha.x / _this2.option.scale);
             break;
-
           case 'left-bottom':
             currObj.width = _this2.round(_this2.numVal(o_width - cha.x / _this2.option.scale));
             currObj.height = _this2.round(_this2.numVal(o_height + cha.y / _this2.option.scale));
             currObj.left = _this2.round(o_left + cha.x / _this2.option.scale);
             break;
-
           case 'left-bottom':
             currObj.width = _this2.round(_this2.numVal(o_width - cha.x / _this2.option.scale));
             currObj.height = _this2.round(_this2.numVal(o_height + cha.y / _this2.option.scale));
             currObj.left = _this2.round(o_left + cha.x / _this2.option.scale);
             break;
-
           case 'top':
             currObj.height = _this2.round(_this2.numVal(o_height - cha.y / _this2.option.scale));
             currObj.top = _this2.round(o_top + cha.y / _this2.option.scale);
             break;
-
           case 'bottom':
             currObj.height = _this2.round(_this2.numVal(o_height + cha.y / _this2.option.scale));
             break;
-
           case 'right-top':
             currObj.width = _this2.round(_this2.numVal(o_width + cha.x / _this2.option.scale));
             currObj.height = _this2.round(_this2.numVal(o_height - cha.y / _this2.option.scale));
             currObj.top = _this2.round(o_top + cha.y / _this2.option.scale);
             break;
-
           case 'right-center':
             currObj.width = _this2.round(_this2.numVal(o_width + cha.x / _this2.option.scale));
             break;
-
           case 'right-bottom':
             currObj.width = _this2.round(_this2.numVal(o_width + cha.x / _this2.option.scale));
             currObj.height = _this2.round(_this2.numVal(o_height + cha.y / _this2.option.scale));
             break;
         }
       };
-
       document.onmouseup = function (e) {
         _this2.$emit('change-size-stop', _this2.data);
-
         _this2.up(e);
       };
     },
@@ -361,7 +340,7 @@ var createUUID = function createUUID() {
     return (id, style) => addStyle(id, style, context);
 }
 function addStyle(id, css, context) {
-    const group =  css.media || 'default' ;
+    const group = css.media || 'default' ;
     const style = context._styles[group] || (context._styles[group] = { ids: [], css: '' });
     if (!style.ids.includes(id)) {
         style.media = css.media;
@@ -386,15 +365,12 @@ function renderStyles(styles) {
     return css;
 }/* script */
 var __vue_script__ = script;
-/* template */
 
+/* template */
 var __vue_render__ = function __vue_render__() {
   var _vm = this;
-
   var _h = _vm.$createElement;
-
   var _c = _vm._self._c || _h;
-
   return _c('div', {
     ref: _vm.key,
     staticClass: "drag",
@@ -411,24 +387,23 @@ var __vue_render__ = function __vue_render__() {
     on: {
       "mousedown": function mousedown($event) {
         $event.stopPropagation();
-        return _vm.down($event);
+        return _vm.down.apply(null, arguments);
       },
       "mouseover": function mouseover($event) {
         $event.stopPropagation();
-        return _vm.mouseover($event);
+        return _vm.mouseover.apply(null, arguments);
       },
       "mouseleave": _vm.mouseleave,
       "click": function click($event) {
         $event.stopPropagation();
-        return _vm.clickStop($event);
+        return _vm.clickStop.apply(null, arguments);
       }
     }
   }, [_vm._t("default"), _vm._ssrNode(" " + (_vm.data.active ? "<div class=\"drag-x flex-aic\"" + _vm._ssrStyle(null, _vm.dragXStyle, null) + " data-v-47f7d7c1>" + _vm._ssrEscape("X：" + _vm._s(_vm.data.left)) + "</div> <div class=\"drag-y flex-aic\"" + _vm._ssrStyle(null, _vm.dragYStyle, null) + " data-v-47f7d7c1>" + _vm._ssrEscape("Y：" + _vm._s(_vm.data.top)) + "</div>" : "<!---->") + " " + (_vm.data.active ? "<div class=\"drag-dian drag-left-top\"" + _vm._ssrStyle(null, _vm.dianStyle('left-top'), null) + " data-v-47f7d7c1></div> <div class=\"drag-dian drag-left-center\"" + _vm._ssrStyle(null, _vm.dianStyle('left-center'), null) + " data-v-47f7d7c1></div> <div class=\"drag-dian drag-left-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle('left-bottom'), null) + " data-v-47f7d7c1></div> <div class=\"drag-dian drag-top\"" + _vm._ssrStyle(null, _vm.dianStyle('top'), null) + " data-v-47f7d7c1></div> <div class=\"drag-dian drag-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle('bottom'), null) + " data-v-47f7d7c1></div> <div class=\"drag-dian drag-right-top\"" + _vm._ssrStyle(null, _vm.dianStyle('right-top'), null) + " data-v-47f7d7c1></div> <div class=\"drag-dian drag-right-center\"" + _vm._ssrStyle(null, _vm.dianStyle('right-center'), null) + " data-v-47f7d7c1></div> <div class=\"drag-dian drag-right-bottom\"" + _vm._ssrStyle(null, _vm.dianStyle('right-bottom'), null) + " data-v-47f7d7c1></div>" : "<!---->"))], 2);
 };
-
 var __vue_staticRenderFns__ = [];
-/* style */
 
+/* style */
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
   inject("data-v-47f7d7c1_0", {
@@ -438,14 +413,10 @@ var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   });
 };
 /* scoped */
-
-
 var __vue_scope_id__ = "data-v-47f7d7c1";
 /* module identifier */
-
 var __vue_module_identifier__ = "data-v-47f7d7c1";
 /* functional template */
-
 var __vue_is_functional_template__ = false;
 /* style inject shadow dom */
 
@@ -454,37 +425,38 @@ var __vue_component__ = /*#__PURE__*/normalizeComponent({
   staticRenderFns: __vue_staticRenderFns__
 }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, undefined, createInjectorSSR, undefined);// Import vue component
 
+// install function executed by Vue.use()
 var install = function installGaoVueDragable(Vue) {
   if (install.installed) return;
   install.installed = true;
   Vue.component('GaoVueDragable', __vue_component__);
-}; // Create module definition for Vue.use()
+};
 
-
+// Create module definition for Vue.use()
 var plugin = {
   install: install
-}; // To auto-install on non-es builds, when vue is found
+};
+
+// To auto-install on non-es builds, when vue is found
 // eslint-disable-next-line no-redeclare
-
 /* global window, global */
-
 {
   var GlobalVue = null;
-
   if (typeof window !== 'undefined') {
     GlobalVue = window.Vue;
   } else if (typeof global !== 'undefined') {
     GlobalVue = global.Vue;
   }
-
   if (GlobalVue) {
     GlobalVue.use(plugin);
   }
-} // Inject install function into component - allows component
+}
+
+// Inject install function into component - allows component
 // to be registered via Vue.use() as well as Vue.component()
+__vue_component__.install = install;
 
-
-__vue_component__.install = install; // Export component by default
+// It's possible to expose named exports when writing components that can
 // also be used as directives, etc. - eg. import { RollupDemoDirective } from 'rollup-demo';
 // export const RollupDemoDirective = component;
-exports.default=__vue_component__;
+exports["default"]=__vue_component__;
